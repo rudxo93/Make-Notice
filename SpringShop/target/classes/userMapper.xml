@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.shop.signUp.UserMapper">
+	<insert id="userJoin" parameterType="com.spring.shop.signUp.UserDTO">
+		insert into member_info (
+			mi_id,
+			mi_pw,
+			mi_name,
+			mi_moblie,
+			mi_tell,
+			mi_email,
+			mi_addr
+		)values(
+			#{mi_id},
+			#{mi_pw},
+			#{mi_name},
+			#{mi_moblie},
+			#{mi_tell},
+			#{mi_email},
+			#{mi_addr}
+		)
+	</insert>
+	
+	<select id="idCheck" resultType="int" parameterType="String">
+		select 
+			count(*) 
+		from 
+			member_info 
+		where 
+			mi_id = #{id};
+	
+	</select>
+	
+	<select id="login" parameterType="com.spring.shop.signUp.UserDTO" resultType="com.spring.shop.signUp.UserDTO">
+		select
+			*
+		from
+			member_info mi
+		where
+			mi_id = #{mi_id} and mi_pw = #{mi_pw};
+	</select>
+	
+	<select id="mypage" parameterType="String" resultType="com.spring.shop.signUp.UserDTO">
+		select 
+			* 
+		from 
+			member_info mi 
+		where 
+			mi_id = #{mi_id};
+	</select>
+	
+	<update id="userUpdate" parameterType="com.spring.shop.signUp.UserDTO">
+		update 
+			member_info 
+		set 
+			mi_pw = #{mi_pw},
+			mi_tell = #{mi_tell},
+			mi_moblie = #{mi_moblie},
+			mi_email = #{mi_email},
+			mi_addr = #{mi_addr}
+		where
+			mi_id = #{mi_id};
+	</update>
+	
+	<delete id="userDelete">
+		delete from
+			member_info
+		where
+			mi_id = #{mi_id};
+	</delete>
+</mapper>
