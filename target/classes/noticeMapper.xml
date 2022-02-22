@@ -2,5 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.shop.notice.NoticeMapper">
+	<select id="getNoticeListAll" resultType="com.spring.shop.notice.NoticeDTO">
+		select
+			ni_no,
+			ni_title,
+			ni_content,
+			ni_writer,
+			TO_CHAR(TO_TIMESTAMP(ni_insertdt, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') "ni_insertdt" 
+		from
+			notice_info ni
+		order by
+			ni_no desc
+	</select>
+	
+	<select id="getNotice" parameterType="int" resultType="com.spring.shop.notice.NoticeDTO">
+	select
+		ni_no,
+		ni_title,
+		ni_content,
+		ni_writer
+	from
+		notice_info ni
+	where
+		ni_no = #{ni_no}
+	
+	</select>
+	
+	<insert id="noticeInsert" parameterType="com.spring.shop.notice.NoticeDTO">
+		insert into notice_info(
+			ni_no,
+			ni_title,
+			ni_content,
+			ni_writer
+		) values (
+			nextval('seq_ni_no'),
+			#{ni_title},
+			#{ni_content},
+			#{ni_writer}
+		)
+	</insert>
+	
+	<delete id="noticeDelete">
+		delete from
+			notice_info
+		where
+			ni_no = #{ni_no}
+	</delete>
+	
+	<update id="noticeUpdate" parameterType="com.spring.shop.notice.NoticeDTO">
+		update
+			notice_info
+		set
+			ni_title = #{ni_title},
+			ni_content = #{ni_content}
+		where
+			ni_no = #{ni_no}
+	</update>
 
 </mapper>

@@ -8,13 +8,12 @@
 			</div>
 			<div class="card-body">
 				<div class="form-group">
-					<label for="title">제목</label>
-					<input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
+					<label for="ni_title">제목</label>
+					<input class="form-control" id="ni_title" name="ni_title" placeholder="제목을 입력해주세요">
 				</div>
 				<div class="form-group">
-					<label for="content">내용</label>
-					<textarea class="form-control" id="content" name="content" rows="30"
-						 placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
+					<label for="ni_content">내용</label>
+					<textarea class="form-control" id="conteni_contentnt" name="ni_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="writer">작성자</label> 
@@ -23,7 +22,7 @@
 			</div>
 			<div class="card-footer">
 				<button type="button" class="btn btn-primary">
-					<i class="fa fa-list"></i> 목록
+					<i class="fa fa-list"></i> <a href="/notice" style="color: white;">목록</a>
 				</button>
 				<div class="float-right">
 					<button type="reset" class="btn btn-warning">

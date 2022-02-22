@@ -92,8 +92,6 @@ public class SignUpController {
 	public String updateUser(UserDTO dto, HttpServletRequest req) {
 		// 업데이트 할 내용 / 비번, 휴대폰, 집전화, 이메일, 주소
 		int rst = userService.userUpdate(dto, req);
-		System.out.println(rst);
-		System.out.println(dto.toString());
 		
 		if(rst > 0) {
 			req.setAttribute("MSG", "회원정보가 수정되었습니다.");
