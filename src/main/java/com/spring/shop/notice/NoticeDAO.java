@@ -1,6 +1,7 @@
 package com.spring.shop.notice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class NoticeDAO {
 	SqlSession ss;
 	
 	// 게시글 list 보여주기
-	public List<NoticeDTO> getNoticeListAll(NoticeDTO dto){
-		return ss.getMapper(NoticeMapper.class).getNoticeListAll(dto);
+	public List<NoticeDTO> getNoticeListAll(Map<String, Object> param){
+		return ss.getMapper(NoticeMapper.class).getNoticeListAll(param);
 	}
 	// 게시글 정보 페이지 이동
 	public NoticeDTO getNotice(int ni_no) {
@@ -31,6 +32,10 @@ public class NoticeDAO {
 	// 게시글 업데이트
 	public int noticeUpdate(NoticeDTO dto) {
 		return ss.getMapper(NoticeMapper.class).noticeUpdate(dto);
+	}
+	// 총 게시글 수 구하기
+	public int getTotalCnt() {
+		return ss.getMapper(NoticeMapper.class).getTotalCnt();
 	}
 	
 }

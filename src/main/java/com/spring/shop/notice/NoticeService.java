@@ -1,12 +1,15 @@
 package com.spring.shop.notice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.shop.commons.Page;
 import com.spring.shop.signUp.UserDTO;
 
 @Service
@@ -14,10 +17,26 @@ public class NoticeService {
 
 	@Autowired
 	NoticeDAO noticeDAO;
+	
+	@Autowired
+	Page page;
+	
 
 	// 게시글 조회
-	public List<NoticeDTO> getNoticeListAll(NoticeDTO dto) {
-		return noticeDAO.getNoticeListAll(dto);
+	public Map<String, Object> getNoticeListAll(HttpServletRequest req) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		int totalCnt = noticeDAO.getTotalCnt();
+		int pagePerCnt = Integer.parseInt(req.getParameter("pagePerCnt"));
+		int curPage = Integer.parseInt(req.getParameter("curPage"));
+		
+		Map<String, Object> param =  page.pageGenerator(totalCnt, pagePerCnt, curPage);
+		List<NoticeDTO> list =  noticeDAO.getNoticeListAll(param);
+		
+		result.put("list", list);
+		result.put("paging", param);
+		
+		return result;
 	}
 
 	// 게시글 정보 페이지 이동
