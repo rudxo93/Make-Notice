@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="col-lg-12">
-	<form  action="/notice/notice-update" method="post">
+	<form  action="/notice/notice-update" method="post" enctype="multipart/form-data">
 		<div class="card">
 			<div class="card-header with-border">
 				<h3 class="card-title">게시글 수정하기</h3>
@@ -16,11 +16,16 @@
 				</div>
 				<div class="form-group">	
 					<label for="ni_title">제목</label>
-					<input class="form-control" id="ni_title" name="ni_title" >
+					<input class="form-control" id="ni_title" name="ni_title" value="${notice.ni_title }">
 				</div>
 				<div class="form-group">
 					<label for="ni_content">내용</label>
-					<textarea class="form-control" id="ni_content" name="ni_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
+					<textarea class="form-control" id="ni_content" name="ni_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;">${notice.ni_content }</textarea>
+				</div>
+				<div class="form-group">
+					<label for="file">첨부파일</label> 
+					<input class="form-control" id="writer" name="file" type="file"	>
+					<label>${notice.file_name }</label><button type="button" class="del_btn">x</button>
 				</div>
 			</div>
 			<div class="card-footer">

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="col-lg-12">
-	<form  action="/notice/notice-delete" method="post">
+	<form  action="/notice/notice-delete" method="post" enctype="multipart/form-data">
 		<div class="card">
 			<div class="card-header with-border">
 				<h3 class="card-title">게시글</h3>
@@ -21,6 +21,10 @@
 				<div class="form-group">
 					<label for="ni_content">내용</label>
 					<textarea class="form-control" id="ni_content" name="ni_content" readonly="readonly" style="resize: none;"><c:out value="${notice.ni_content } "></c:out></textarea>
+				</div>
+				<div class="form-group">
+					<label for="file">첨부파일</label> 
+					<input class="form-control" id="writer" name="file_name" type="text"	value="${notice.file_name }">
 				</div>
 			</div>
 			<div class="card-footer">

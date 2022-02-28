@@ -1,5 +1,6 @@
 package com.spring.shop.notice;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 @Controller
 public class NoticeController {
@@ -33,12 +33,13 @@ public class NoticeController {
 		return noticeList;
 	}
 
-	// 게시글 정보 페이지 이동
+	// 게시글 정보 페이지 이동 -> 업로드 된 파일까지 들고올 수 있게 만들어야함
 	@RequestMapping(value = "/notice/noticeInfo", method = RequestMethod.GET)
 	public String getNoticeInfo(@RequestParam("ni_no") int ni_no, NoticeDTO dto, HttpServletRequest req) {
-		// 글 번호를 넘겨줘야한다
+		
+		// 글 번호를 넘겨줘야한다 // dto에 파일 정보 담아주어야 한다.
 		NoticeDTO noticeInfo = noticeService.getNotice(ni_no);
-
+	
 		req.setAttribute("notice", noticeInfo);
 		req.setAttribute("content", "notice/noticeInfo.jsp");
 
@@ -56,7 +57,7 @@ public class NoticeController {
 
 	// 게시글 등록하기
 	@RequestMapping(value = "/notice/notice-write", method = RequestMethod.POST)
-	public String noticeInsert(NoticeDTO dto, HttpServletRequest req) {
+	public String noticeInsert(NoticeDTO dto, HttpServletRequest req) throws IOException {
 
 		int noticeInsert = noticeService.noticeInsert(dto, req);
 
@@ -67,23 +68,6 @@ public class NoticeController {
 		}
 
 		req.setAttribute("content", "notice/notice.jsp");
-
-		return "home";
-	}
-
-	// 게시글 삭제하기
-	@RequestMapping(value = "/notice/notice-delete", method = RequestMethod.POST)
-	public String noticeDelete(int ni_no, NoticeDTO dto, HttpServletRequest req) {
-		int rst = noticeService.noticeDelete(ni_no);
-		// 추가 기능 writer가 본인이 아닐 경우 삭제 되지 않게
-
-		if (rst > 0) {
-			req.setAttribute("MSG", "게시글이 정상적으로 삭제되었습니다.");
-			req.setAttribute("content", "notice/notice.jsp");
-		} else {
-			req.setAttribute("MSG", "게시글 삭제를 실패했습니다.");
-			req.setAttribute("content", "notice/noticeInfo.jsp");
-		}
 
 		return "home";
 	}
@@ -102,13 +86,14 @@ public class NoticeController {
 
 	// 게시글 수정하기
 	@RequestMapping(value = "/notice/notice-update", method = RequestMethod.POST)
-	public String getnoticeUpdate(NoticeDTO dto, HttpServletRequest req) {
-
-		dto.getNi_no();
+	public String getnoticeUpdate(NoticeDTO dto, HttpServletRequest req) throws IOException {
+		
 		int rst = noticeService.noticeUpdate(dto, req);
 
+		
 		if (rst > 0) { // 수정작업 완료
 			req.setAttribute("MSG", "게시글이 정상적으로 변경되었습니다.");
+			// 현재 오류 시점
 			NoticeDTO noticeInfo = noticeService.getNotice(dto.getNi_no()); // 게시글 하나 select
 			req.setAttribute("notice", noticeInfo);
 			req.setAttribute("content", "notice/noticeInfo.jsp");
@@ -119,4 +104,65 @@ public class NoticeController {
 
 		return "home";
 	}
+	
+	// 게시글 삭제하기
+	@RequestMapping(value = "/notice/notice-delete", method = RequestMethod.POST)
+	public void noticeDelete(NoticeDTO dto, HttpServletRequest req) {
+		
+		
+		System.out.println(dto.toString());
+		
+		noticeService.noticeDelete(dto, req);
+		
+		/*
+		int rst = noticeService.noticeDelete(req);
+		
+		if(rst > 0) {
+			req.setAttribute("MSG", "게시글이 정상적으로 삭제되었습니다.");
+			req.setAttribute("notice", noticeInfo);
+			req.setAttribute("content", "notice/notice.jsp");
+		} else {
+			req.setAttribute("MSG", "게시글 삭제 실패");
+			req.setAttribute("content", "notice/noticeInfo.jsp");
+		}
+		
+		return "home";
+		*/
+		
+		/*
+		int rst = noticeService.noticeDelete(dto, req);
+		if (rst > 0) {
+			req.setAttribute("MSG", "게시글이 정상적으로 삭제되었습니다.");
+			NoticeDTO noticeInfo = noticeService.getNotice(dto.getNi_no());
+			req.setAttribute("notice", noticeInfo);
+			req.setAttribute("content", "notice/notice.jsp");
+		} else {
+			req.setAttribute("MSG", "게시글 삭제를 실패했습니다.");
+			req.setAttribute("content", "notice/noticeInfo.jsp");
+		}
+
+		return "home";
+		
+		*/
+	}
+	
+	/*
+	// 게시글 파일 삭제하기
+	@RequestMapping(value = "/deleteNotice", method = RequestMethod.POST)
+	public String deleteNotice(NoticeDTO dto, HttpServletRequest req) {
+		
+		int rst = noticeService.boardDelete(dto, req);
+		
+		if(rst > 0) { // 파일 삭제 성공
+			req.setAttribute("MSG", "첨부파일이 삭제되었습니다.");
+			NoticeDTO noticeInfo = noticeService.getNotice(dto.getNi_no());
+			req.setAttribute("notice", noticeInfo);
+		} else { // 파일 삭제 실패
+			req.setAttribute("MSG", "첨부파일이 존재하지 않습니다!");
+		}
+		req.setAttribute("content", "notice/noticeUpdate.jsp");
+		return "home";
+		
+	}
+	*/
 }

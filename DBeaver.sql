@@ -9,6 +9,19 @@ create table member_info(
 	mi_insertdt varchar(50) default to_char(now(), 'YYYYMMDDHH24MISS'::text)
 )
 
+CREATE TABLE public.board_attach (
+	board_type varchar(10) NOT NULL,
+	board_id int4 NOT NULL,
+	file_num int4 NOT NULL,
+	file_name varchar(200) NOT NULL,
+	saved_file_name varchar(200) NOT NULL,
+	file_size int4 NULL,
+	upload_dt varchar(14) NULL DEFAULT to_char(now(), 'YYYYMMDDHH24MISS'::text),
+	insert_dt varchar(14) NULL DEFAULT to_char(now(), 'YYYYMMDDHH24MISS'::text),
+	CONSTRAINT sys_board_file_pk PRIMARY KEY (board_id, file_num)
+);
+
+
 select * from member_info 	
 
 
@@ -61,9 +74,9 @@ insert into notice_info(
 	ni_writer ,
 	TO_CHAR(TO_TIMESTAMP(ni_insertdt, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') "ni_insertdt" 
 ) values (
-	nextval('seq_ni_no') ,
-	'공지45134567123',
-	'공지인것같은 아닌것같은 인것같은 공지',
+	'nextval('seq_ni_no')' ,
+	'14132',
+	'123123dqdasd',
 	'admin13',
 	now()
 )
@@ -124,4 +137,124 @@ limit 4-2 offset 2
 limit 6-4 offset 4
 limit 8-6 offset 6
 
+select
+			ni_no,
+			ni_title,
+			ni_content,
+			ni_writer,
+			TO_CHAR(TO_TIMESTAMP(ni_insertdt, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') "ni_insertdt" 
+		from
+			notice_info ni
+		where all like concat('%', '', '%') 
+		order by
+			ni_no desc
+		limit 4 offset 0
+		
 
+		
+		select *
+		from notice_info ni 
+		order by ni_no  desc
+
+select
+	ni.ni_no,
+	ni.ni_title,
+	ni.ni_content,
+	ni.ni_writer,
+	ba.file_name, 
+	ba.saved_file_name 
+from 
+	notice_info ni 
+	left outer join board_attach ba on(ba.board_id  = ni.ni_no)
+where
+	ni.ni_no = '73'
+	
+	
+	
+	
+	
+	
+	ni.ni_no  = '70'     // 결과 파일을 가지고 있다면 결과가 나오고 게시글에 파일이 존재하지 않다면 결과가 나오지 않는다.
+ 
+		
+select * from notice_info ni 
+
+select * from board_attach ba 
+
+	ni.ni_no,
+	ni.ni_title,
+	ni.ni_content,
+	ni.ni_writer,
+	ba.file_name 	
+		
+	파일을 올리면 >> 웹서버저장
+	저장에 문제 없으면
+	notice_info에 글 등록
+	등록한 sequence 조회해서
+	board_attach
+	
+select 
+	ba.board_id, 
+	ba.file_num,
+	ba.file_name,
+	ba.saved_file_name,
+	ba.file_size
+from board_attach ba
+
+select
+	saved_file_name 
+from
+	board_attach ba 
+where 
+	board_id = '82'
+
+update
+			notice_info
+		set
+			ni_title = #{ni_title},
+			ni_content = #{ni_content}
+		where
+			ni_no = #{ni_no}
+			
+			
+select * from board_attach ba
+			
+update
+			board_attach
+		set
+			file_name = 'qe4rff.jpg',
+			saved_file_name ='F_1645686385485207446844253.jpg',
+			file_size = '77952'
+		where
+			board_id = #{ni_no}
+			
+
+insert into board_attach(
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		)values(
+			'Notice',
+			#{board_id},
+			nextval('seq_file_num'),
+			#{file_name},
+			#{saved_file_name},
+			#{file_size}
+		)
+		
+delete from board_attach where file_num = '36'
+
+select * from notice_info ni 
+
+delete from notice_info  where ni_no = '83'
+
+select * from board_attach ba 
+
+
+	
+	
+	
+	

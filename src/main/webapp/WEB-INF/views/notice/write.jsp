@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <div class="col-lg-12">
-	<form  action="/notice/notice-write" method="post">
+	<form  action="/notice/notice-write" method="post" enctype="multipart/form-data">
 		<div class="card">
 			<div class="card-header with-border">
 				<h3 class="card-title">게시글 작성</h3>
@@ -16,8 +16,13 @@
 					<textarea class="form-control" id="conteni_contentnt" name="ni_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
 				</div>
 				<div class="form-group">
-					<label for="writer">작성자</label> 
-					<input class="form-control" id="writer" name="writer" value="${loginMember.mi_id }" readonly="readonly">
+					<label for="ni_writer">작성자</label> 
+					<input class="form-control" id="ni_writer" name="ni_writer" value="${loginMember.mi_id }" readonly="readonly">
+				</div>
+				<div class="form-group">
+					<label for="file">첨부파일</label> 
+					<input class="form-control" id="writer" name="file" type="file">
+					<label >${notice.file_name }</label>
 				</div>
 			</div>
 			<div class="card-footer">
