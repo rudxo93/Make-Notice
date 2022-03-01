@@ -28,6 +28,9 @@ public interface NoticeMapper {
 	// 게시글 삭제하기
 	public abstract int noticeDelete(int ni_no);
 	
+	// 첨부파일 항목 가져오기
+	public abstract NoticeDTO getBoard(int ni_no);
+	
 	// 첨부파일 삭제하기
-	public abstract int boardDelete(String file_name);
+	public abstract int boardDelete(String saved_file_name);
 }

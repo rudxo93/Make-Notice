@@ -107,19 +107,15 @@ public class NoticeController {
 	
 	// 게시글 삭제하기
 	@RequestMapping(value = "/notice/notice-delete", method = RequestMethod.POST)
-	public void noticeDelete(NoticeDTO dto, HttpServletRequest req) {
+	public String noticeDelete(NoticeDTO dto, HttpServletRequest req) {
 		
 		
 		System.out.println(dto.toString());
 		
-		noticeService.noticeDelete(dto, req);
-		
-		/*
-		int rst = noticeService.noticeDelete(req);
+		int rst = noticeService.noticeDelete(dto, req);
 		
 		if(rst > 0) {
 			req.setAttribute("MSG", "게시글이 정상적으로 삭제되었습니다.");
-			req.setAttribute("notice", noticeInfo);
 			req.setAttribute("content", "notice/notice.jsp");
 		} else {
 			req.setAttribute("MSG", "게시글 삭제 실패");
@@ -127,42 +123,5 @@ public class NoticeController {
 		}
 		
 		return "home";
-		*/
-		
-		/*
-		int rst = noticeService.noticeDelete(dto, req);
-		if (rst > 0) {
-			req.setAttribute("MSG", "게시글이 정상적으로 삭제되었습니다.");
-			NoticeDTO noticeInfo = noticeService.getNotice(dto.getNi_no());
-			req.setAttribute("notice", noticeInfo);
-			req.setAttribute("content", "notice/notice.jsp");
-		} else {
-			req.setAttribute("MSG", "게시글 삭제를 실패했습니다.");
-			req.setAttribute("content", "notice/noticeInfo.jsp");
-		}
-
-		return "home";
-		
-		*/
 	}
-	
-	/*
-	// 게시글 파일 삭제하기
-	@RequestMapping(value = "/deleteNotice", method = RequestMethod.POST)
-	public String deleteNotice(NoticeDTO dto, HttpServletRequest req) {
-		
-		int rst = noticeService.boardDelete(dto, req);
-		
-		if(rst > 0) { // 파일 삭제 성공
-			req.setAttribute("MSG", "첨부파일이 삭제되었습니다.");
-			NoticeDTO noticeInfo = noticeService.getNotice(dto.getNi_no());
-			req.setAttribute("notice", noticeInfo);
-		} else { // 파일 삭제 실패
-			req.setAttribute("MSG", "첨부파일이 존재하지 않습니다!");
-		}
-		req.setAttribute("content", "notice/noticeUpdate.jsp");
-		return "home";
-		
-	}
-	*/
 }

@@ -28,15 +28,6 @@ public class NoticeDAO {
 		return ss.getMapper(NoticeMapper.class).noticeInsert(dto);
 	}
 
-	// 게시글 삭제하기
-	public int noticeDelete(int ni_no) {
-		return ss.getMapper(NoticeMapper.class).noticeDelete(ni_no);
-	}
-	
-	// 첨부파일 삭제하기
-	public int boardDelete(String file_name) {
-		return ss.getMapper(NoticeMapper.class).boardDelete(file_name);
-	}
 
 	// 게시글 업데이트
 	public int noticeUpdate(NoticeDTO dto) {
@@ -56,5 +47,20 @@ public class NoticeDAO {
 	// 파일 업로드
 	public int insertBoardAttach(Map<String, Object> param) {
 		return ss.getMapper(NoticeMapper.class).insertBoardAttach(param);
+	}
+	
+	// 게시글 삭제하기
+	public int noticeDelete(int ni_no) {
+		return ss.getMapper(NoticeMapper.class).noticeDelete(ni_no);
+	}
+	
+	// 첨부파일 항목 가져오기
+	public NoticeDTO getBoard(int ni_no) {
+		return ss.getMapper(NoticeMapper.class).getBoard(ni_no);
+	}
+	
+	// 첨부파일 삭제하기
+	public int boardDelete(String saved_file_name) {
+		return ss.getMapper(NoticeMapper.class).boardDelete(saved_file_name);
 	}
 }

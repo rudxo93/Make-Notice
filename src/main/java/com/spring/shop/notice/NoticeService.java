@@ -97,7 +97,6 @@ public class NoticeService {
 					param.put("file_size", size);
 					noticeDAO.insertBoardAttach(param); // 결과값 ?
 				} catch (Exception e) {
-					e.printStackTrace();
 					// TODO: handle exception
 					// 롤백 비정상적인 종료인가???? 모든 작업을 원상태로 돌린다
 					pt.rollback(status);
@@ -191,21 +190,25 @@ public class NoticeService {
 			try {
 				// 게시글 삭제 진행
 				noticeDAO.noticeDelete(dto.getNi_no());
-				
-				if() {
-					
-					
-				}
-				
-				
-				
-				// 게시글에 파일이 존재한다면?
-				if(dto.getFile_name().isEmpty()) {
-					noticeDAO.boardDelete(dto.getFile_name());
-					
-					File delFile = new File(path + "/" + dto.getSaved_file_name());
-					delFile.delete();
-
+				// 현재 파일이 존재한다면?
+				if(!dto.getFile_name().isBlank()) {
+					try {
+						NoticeDTO getBoard = noticeDAO.getBoard(dto.getNi_no());
+						dto.setFile_num(getBoard.getFile_num());
+						dto.setFile_name(getBoard.getFile_name());
+						dto.setSaved_file_name(getBoard.getSaved_file_name());
+						dto.setFile_size(getBoard.getFile_size());
+						
+						noticeDAO.boardDelete(dto.getSaved_file_name());
+						
+						File delFile = new File(path + "/" + dto.getSaved_file_name());
+						delFile.delete();
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+						pt.rollback(status);
+						return 0;
+					}
 				}
 				pt.commit(status);
 				return 1;
@@ -214,65 +217,5 @@ public class NoticeService {
 				System.out.println("삭제 실패");
 				return 0;
 			}
-			
-			
-			
-			return 1;
 		}
-		
-		/*
-		// 삭제 진행
-	
-	}
-	
-	
-	 	//게시글에 파일이 존재한다면?
-			if(!name.isEmpty()) {
-				// 파일 명과 데이터 생성
-				File destination = File.createTempFile("F_" + System.currentTimeMillis(), name.substring(name.lastIndexOf(".")), saveDir);
-				System.out.println(destination);
-				String fileSavedName = destination.getName(); // tempName
-				long size = file.getSize();
-				FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(destination));
-				// ====================== 파일 삭제 진행================================
-				try {
-					// 삭제 성공
-					noticeDAO.boardDelete(dto.getNi_no());
-					File delFile = new File(path + "/" + fileSavedName);
-					delFile.delete();
-				} catch (Exception e) {
-					pt.rollback(status); // 삭제 실패 -> 롤백
-					return 0;
-				} 
-				
-			}
-			pt.commit(status);
-			return 1; //파일 삭제 성공
-	 */
-	
-	/*
-	// 파일 삭제하기
-	public int boardDelete(NoticeDTO dto, HttpServletRequest req) {
-		// ====== 경로 생성 없다면 서버 파일 만들기 ======
-		String path = req.getSession().getServletContext().getRealPath("resources/file");
-		File saveDir = new File(path);
-		if(!saveDir.exists()) {
-			saveDir.mkdirs();
-		}
-		// 게시글 하나 조회
-		NoticeDTO n_search = noticeDAO.getNotice(dto.getNi_no());
-		// 쿼리에 사용할 파일 넘버 가져오기
-		int f_num = n_search.getFile_num();
-		
-		int f_delete = noticeDAO.boardDelete(f_num);
-		
-		if(f_delete > 0) { // 파일 삭제 쿼리 성공
-			File delFile = new File(path + "/" + n_search.getSaved_file_name()); // 경로의 tempName을 찾는다
-			delFile.delete(); // 경로에 있는 파일 삭제
-			
-		}
-		
-		return f_delete;
-	}
-*/	
 }

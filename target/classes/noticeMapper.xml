@@ -104,10 +104,22 @@
 			ni_no = #{ni_no}
 	</delete>
 	
+	<select id="getBoard" parameterType="int" resultType="com.spring.shop.notice.NoticeDTO">
+		select
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		from
+			board_attach
+		where
+			board_id = #{ni_no}
+	</select>
+	
 	<delete id="boardDelete">
 		delete from
 			board_attach
 		where
-			file_name = #{file_name}
+			saved_file_name = #{saved_file_name}
 	</delete>
 </mapper>
