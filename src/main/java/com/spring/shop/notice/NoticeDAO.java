@@ -12,7 +12,7 @@ public class NoticeDAO {
 
 	@Autowired
 	SqlSession ss;
-
+//==========================================================================
 	// 게시글 list 보여주기
 	public List<NoticeDTO> getNoticeListAll(Map<String, Object> param) {
 		return ss.getMapper(NoticeMapper.class).getNoticeListAll(param);
@@ -22,13 +22,22 @@ public class NoticeDAO {
 	public NoticeDTO getNotice(int ni_no) {
 		return ss.getMapper(NoticeMapper.class).getNotice(ni_no);
 	}
-
+	
+	// 총 게시글 수 구하기
+	public int getTotalCnt(Map<String, Object> param) {
+		return ss.getMapper(NoticeMapper.class).getTotalCnt(param);
+	}
+//==========================================================================
 	// 게시글 작성
 	public int noticeInsert(NoticeDTO dto) {
 		return ss.getMapper(NoticeMapper.class).noticeInsert(dto);
 	}
-
-
+	
+	// 파일 업로드
+	public int insertBoardAttach(Map<String, Object> param) {
+		return ss.getMapper(NoticeMapper.class).insertBoardAttach(param);
+	}
+//==========================================================================
 	// 게시글 업데이트
 	public int noticeUpdate(NoticeDTO dto) {
 		return ss.getMapper(NoticeMapper.class).noticeUpdate(dto);
@@ -38,17 +47,7 @@ public class NoticeDAO {
 	public int boardUpate(Map<String, Object> param2) {
 		return ss.getMapper(NoticeMapper.class).boardUpate(param2);
 	}
-
-	// 총 게시글 수 구하기
-	public int getTotalCnt(Map<String, Object> param) {
-		return ss.getMapper(NoticeMapper.class).getTotalCnt(param);
-	}
-	
-	// 파일 업로드
-	public int insertBoardAttach(Map<String, Object> param) {
-		return ss.getMapper(NoticeMapper.class).insertBoardAttach(param);
-	}
-	
+//==========================================================================
 	// 게시글 삭제하기
 	public int noticeDelete(int ni_no) {
 		return ss.getMapper(NoticeMapper.class).noticeDelete(ni_no);
@@ -63,4 +62,5 @@ public class NoticeDAO {
 	public int boardDelete(String saved_file_name) {
 		return ss.getMapper(NoticeMapper.class).boardDelete(saved_file_name);
 	}
+//==========================================================================
 }

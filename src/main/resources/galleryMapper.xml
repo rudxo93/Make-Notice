@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.shop.gallery.GalleryMapper">
+	<select id="getGalleryListAll" parameterType="map" resultType="com.spring.shop.gallery.GalleryDTO">
+		select 
+			gi_no,
+			gi_writer,
+			gi_content,
+			gi_title,
+			TO_CHAR(TO_TIMESTAMP(gi_insert_dt, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') "gi_insert_dt" 
+		from
+			gallery_info gi
+		<include refid="search" />
+		order by
+			gi_no desc
+		limit #{e_offset} - #{s_offset} offset #{s_offset}
+	</select>
+	
+	<sql id="search">
+		<if test="searchType != 'all' and searchType != ''">
+			where ${searchType} like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+	
+	<select id="getTotalCnt" resultType="int" parameterType="map">
+		select count(*)
+		from gallery_info
+		<include refid="search" />
+	</select>
+	
+	<select id="getGallery" parameterType="int" resultType="com.spring.shop.gallery.GalleryDTO">
+	select
+		gi_no,
+		gi_title,
+		gi_content,
+		gi_writer,
+		ba.file_name,
+		ba.saved_file_name
+	from
+		gallery_info gi
+		left outer join board_attach ba on(ba.board_id = gi.gi_no)
+	where
+		gi.gi_no  = #{gi_no}
+
+
+	</select>
+	
+	<insert id="galleryInsert" parameterType="com.spring.shop.gallery.GalleryDTO" useGeneratedKeys="true" keyProperty="gi_no">
+		insert into gallery_info (
+			gi_no,
+			gi_title,
+			gi_content,
+			gi_writer
+		) values (
+			nextval('seq_gi_no'),
+			#{gi_title},
+			#{gi_content},
+			#{gi_writer}
+		)
+	</insert>
+	<insert id="galleryInsertBoard" parameterType="map">
+		insert into board_attach(
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		)values(
+			'Gallery',
+			#{board_id},
+			nextval('seq_file_num'),
+			#{file_name},
+			#{saved_file_name},
+			#{file_size}
+		)
+	</insert>
+
+
+</mapper>

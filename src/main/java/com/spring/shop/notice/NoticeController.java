@@ -20,7 +20,7 @@ public class NoticeController {
 
 	// notice 페이지 이동
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public String getNoticePage(NoticeDTO dto, HttpServletRequest req) {
+	public String getNoticePage(HttpServletRequest req) {
 		req.setAttribute("content", "notice/notice.jsp");
 		return "home";
 	}

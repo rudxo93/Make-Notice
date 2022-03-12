@@ -1,28 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <div class="col-lg-12">
-	<form  action="/notice/notice-write" method="post" enctype="multipart/form-data">
+	<form  action="/gallery/gallery-write" method="post" enctype="multipart/form-data">
 		<div class="card">
 			<div class="card-header with-border">
-				<h3 class="card-title">게시글 작성</h3>
+				<h3 class="card-title">Gallery 작성</h3>
 			</div>
 			<div class="card-body">
 				<div class="form-group">
-					<label for="ni_title">제목</label>
-					<input class="form-control" id="ni_title" name="ni_title" placeholder="제목을 입력해주세요">
+					<label for="gi_title">제목</label>
+					<input class="form-control" id="gi_title" name="gi_title" placeholder="제목을 입력해주세요">
 				</div>
 				<div class="form-group">
-					<label for="ni_content">내용</label>
-					<textarea class="form-control" id="ni_content" name="ni_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
+					<label for="gi_content">내용</label>
+					<textarea class="form-control" id="gi_content" name="gi_content" rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="ni_writer">작성자</label> 
-					<input class="form-control" id="ni_writer" name="ni_writer" value="${loginMember.mi_id }" readonly="readonly">
+					<input class="form-control" id="gi_writer" name="gi_writer" value="${loginMember.mi_id }" readonly="readonly">
 				</div>
 				<div class="form-group">
-					<label for="file">첨부파일</label> 
-					<input class="form-control" id="writer" name="file" type="file">
-					<label >${notice.file_name }</label>
+					<label for="file">이미지 올리기</label> 
+					<input class="form-control" id="g_writer" multiple="multiple" name="file" type="file">
+					<!-- <label >${notice.file_name }</label> -->
 				</div>
 			</div>
 			<div class="card-footer">

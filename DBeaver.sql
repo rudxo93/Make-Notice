@@ -21,6 +21,16 @@ CREATE TABLE public.board_attach (
 	CONSTRAINT sys_board_file_pk PRIMARY KEY (board_id, file_num)
 );
 
+create table gallery_info(
+	gi_no int4 primary key,
+	gi_title varchar(50) not null,
+	gi_content varchar(200) not null,
+	gi_writer varchar(50) not null,
+	gi_insert_dt varchar(14) NULL DEFAULT to_char(now(), 'YYYYMMDDHH24MISS'::text),
+	gi_upload_dt varchar(14) NULL DEFAULT to_char(now(), 'YYYYMMDDHH24MISS'::text)
+	
+)
+
 
 select * from member_info 	
 
@@ -245,13 +255,87 @@ insert into board_attach(
 			#{file_size}
 		)
 		
-delete from board_attach where file_num = '36'
+delete from board_attach where file_num = '39'
 
 select * from notice_info ni 
 
 delete from notice_info  where ni_no = '83'
 
+select * from board_attach ba order by board_id  desc 
+
+select
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		from
+			board_attach
+		where
+			board_id = '80'
+
+select * from notice_info ni 
+			
+select * from gallery_info gi 
+
 select * from board_attach ba 
+
+insert into gallery_info (
+	gi_no,
+	gi_title,
+	gi_content,
+	gi_writer
+) values (
+	nextval('seq_gi_no'),
+	'갤러리1',
+	'사진사진사진사진사진사진사진사진',
+	'admin2'
+)
+
+delete from gallery_info where gi_title  = '333'
+
+delete from board_attach where board_id = '42'
+
+insert into board_attach(
+			board_type,
+			board_id,
+			file_num,
+			file_name,
+			saved_file_name,
+			file_size
+		)values(
+			'Gallery',
+			'1',
+			nextval('seq_file_num'),
+			'asdf.jpg',
+			'F_123871234551234',
+			'1031'
+		)
+
+select 
+	gi_no ,
+	gi_writer ,
+	gi_content ,
+	gi_title ,
+	TO_CHAR(TO_TIMESTAMP(gi_insert_dt, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') "gi_insert_dt" 
+from
+		gallery_info gi
+
+select count(*)
+		from gallery_info
+		
+select
+		gi_no,
+		gi_title,
+		gi_content,
+		gi_writer,
+		ba.file_name,
+		ba.saved_file_name
+	from
+		gallery_info gi
+		left outer join board_attach ba on(ba.board_id = gi.gi_no)
+	where
+		gi.gi_no  = '43'
+
 
 
 	

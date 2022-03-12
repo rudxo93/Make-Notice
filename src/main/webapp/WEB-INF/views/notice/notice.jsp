@@ -99,8 +99,4 @@
 	function goPage(selPage){ /* goPage가 실행이 되면 실행*/
 		search(selPage); // 현재 보고있는 페이지에서 클릭이 일어난다.
 	}
-	
-	
-	
-
 </script>

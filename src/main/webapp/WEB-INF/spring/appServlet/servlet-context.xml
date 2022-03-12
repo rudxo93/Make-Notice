@@ -44,6 +44,7 @@
 				<!--  xml 추가시 이 부분에 넣어주어야 한다. -->
 				<beans:value>classpath:userMapper.xml</beans:value>
 				<beans:value>classpath:noticeMapper.xml</beans:value>
+				<beans:value>classpath:galleryMapper.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
