@@ -26,7 +26,7 @@
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<beans:property name="driverClassName" value="org.postgresql.Driver" />
 		<beans:property name="url"
-			value="jdbc:postgresql://211.198.161.8:5432/ATproject2" />
+			value="jdbc:postgresql://211.222.25.101:5432/ATproject2" />
 		<beans:property name="username" value="ATProject2" />
 		<beans:property name="password" value="at1234" />
 	</beans:bean>
